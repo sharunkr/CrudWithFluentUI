@@ -201,7 +201,10 @@ export default class Reactdemo extends React.Component<any, any> {
       item: getitem.eid,
     });
     this.handleEnable();
+   
   }
+ 
+
   handleEnable = () => {
     if (this.selection > 0) {
       this.setState({
