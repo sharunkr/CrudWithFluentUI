@@ -11,7 +11,7 @@ import { IItemAddResult } from "@pnp/sp/items";
 import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { TextField } from "@fluentui/react/lib/TextField";
 import { Fabric } from "office-ui-fabric-react/lib/Fabric";
-import { Calendar,defaultCalendarStrings } from "@fluentui/react";
+import { Calendar, defaultCalendarStrings } from "@fluentui/react";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -19,7 +19,6 @@ import {
   IColumn,
   SelectionMode,
 } from "office-ui-fabric-react/lib/DetailsList";
-
 
 export interface IDetailsListBasicExampleItem {
   eid: number;
@@ -33,7 +32,6 @@ export interface IDetailsListBasicExampleState {
   items: IDetailsListBasicExampleItem[];
   selectionDetails: string;
 }
-
 
 //type MyState = { name, employees, age, empState, doj, };
 export default class Reactdemo extends React.Component<any, any> {
@@ -218,33 +216,24 @@ export default class Reactdemo extends React.Component<any, any> {
     });
   };
 
-  
   public render() {
     return (
       <div>
         <div>
           <h1>CRUD OPERATION</h1>
-          <form
-            onSubmit={
-              !this.update
-                ? (event) => this.SaveData(event)
-                : (event) => this.UpdateData(event)
-            }
-          >
+          <form onSubmit={(event) => this.SaveData(event)}>
             <TextField
-        
-        placeholder="enter a number..."
+              placeholder="enter a number..."
               label="Eid"
               type="number"
               name="Eid"
               value={this.state.Eid}
               onChange={(event) => this.getdata(event)}
               required
-
             />
             <br />
             <TextField
-            placeholder="enter a name..."
+              placeholder="enter a name..."
               label="Name"
               type="text"
               name="name"
@@ -255,7 +244,7 @@ export default class Reactdemo extends React.Component<any, any> {
             <br />
 
             <TextField
-            placeholder="enter your age..."
+              placeholder="enter your age..."
               label="Age"
               type="number"
               name="age"
@@ -265,7 +254,7 @@ export default class Reactdemo extends React.Component<any, any> {
             />
             <br />
             <TextField
-            placeholder="enter your state..."
+              placeholder="enter your state..."
               label="EmpState"
               type="text"
               name="empState"
@@ -276,7 +265,7 @@ export default class Reactdemo extends React.Component<any, any> {
             <br />
 
             <TextField
-            placeholder="select a date..."
+              placeholder="select a date..."
               label="DOJ"
               type="date"
               name="doj"
