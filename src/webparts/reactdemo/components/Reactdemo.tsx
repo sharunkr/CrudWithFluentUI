@@ -233,6 +233,7 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.Eid}
               onChange={(event) => this.getdata(event)}
               required
+              errorMessage="cannot be empty"
             />
             <br />
             <TextField
@@ -243,6 +244,7 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.name}
               onChange={(event) => this.getdata(event)}
               required
+              errorMessage="cannot be empty"
             />
             <br />
 
@@ -254,6 +256,7 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.age}
               onChange={(event) => this.getdata(event)}
               required
+              errorMessage="cannot be empty"
             />
             <br />
             <TextField
@@ -264,6 +267,7 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.empState}
               onChange={(event) => this.getdata(event)}
               required
+              errorMessage="cannot be empty"
             />
             <br />
 
@@ -275,6 +279,7 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.doj}
               onChange={(event) => this.getdata(event)}
               required
+              errorMessage="cannot be empty"
             />
             <br />
             <PrimaryButton type="submit">SAVE</PrimaryButton>
