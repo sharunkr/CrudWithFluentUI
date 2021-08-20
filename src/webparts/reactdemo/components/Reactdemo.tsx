@@ -19,6 +19,8 @@ import {
   IColumn,
   SelectionMode,
 } from "office-ui-fabric-react/lib/DetailsList";
+import { Panel } from "@fluentui/react/lib/Panel";
+import { useBoolean } from "@fluentui/react-hooks";
 
 export interface IDetailsListBasicExampleItem {
   eid: number;
@@ -60,6 +62,8 @@ export default class Reactdemo extends React.Component<any, any> {
       selectionDetails: "",
       item: 0,
       disabled: true,
+      openPanel: false,
+      dismissPanel:true,
     };
     this.SaveData = this.SaveData.bind(this);
     this.UpdateData = this.UpdateData.bind(this);
@@ -148,7 +152,6 @@ export default class Reactdemo extends React.Component<any, any> {
     });
     this.getData();
     this._selection.setAllSelected(false);
-    this.handleDisable();
   };
 
   DeleteData = async (items) => {
@@ -156,7 +159,6 @@ export default class Reactdemo extends React.Component<any, any> {
     await list.items.getById(items).delete();
     this.getData();
     this._selection.setAllSelected(false);
-    this.handleDisable();
   };
   private getData = async () => {
     await sp.web.lists
@@ -193,31 +195,28 @@ export default class Reactdemo extends React.Component<any, any> {
   };
 
   private _getSelectionDetails() {
-    const getitem =
-      this._selection.getSelection()[0] as IDetailsListBasicExampleItem;
     const selectioncount = this._selection.getSelectedCount();
-    this.selection = selectioncount;
-    this.setState({
-      item: getitem.eid,
-    });
-    this.handleEnable();
-   
-  }
- 
-
-  handleEnable = () => {
-    if (this.selection > 0) {
+    if (selectioncount == 0) {
       this.setState({
+        disabled: true,
+      });
+    } else {
+      const getitem =
+        this._selection.getSelection()[0] as IDetailsListBasicExampleItem;
+      this.setState({
+        item: getitem.eid,
         disabled: false,
+        openPanel: true,
       });
     }
-    this._selection.setAllSelected(false);
-  };
-  handleDisable = () => {
+    
+  }
+  closePanel=()=>{
     this.setState({
-      disabled: true,
-    });
-  };
+      openPanel: false,
+      dismissPanel:true,
+    })
+  }
 
   public render() {
     return (
@@ -312,6 +311,88 @@ export default class Reactdemo extends React.Component<any, any> {
                 // onItemInvoked={this._onItemInvoked}
               />
             </Fabric>
+          </div>
+          <div>
+            <Panel
+              isOpen={this.state.openPanel}
+              onDismiss={this.state.dismissPanel}
+              headerText="CRUD APPLICATION"
+              closeButtonAriaLabel="Close"
+              isFooterAtBottom={true}
+            >
+              <p>Panel CRUD</p>
+              <TextField
+              placeholder="enter a number..."
+              label="Eid"
+              type="number"
+              name="Eid"
+              value={this.state.Eid}
+              onChange={(event) => this.getdata(event)}
+              required
+              errorMessage="cannot be empty"
+            />
+            <br />
+            <TextField
+              placeholder="enter a name..."
+              label="Name"
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={(event) => this.getdata(event)}
+              required
+              errorMessage="cannot be empty"
+            />
+            <br />
+
+            <TextField
+              placeholder="enter your age..."
+              label="Age"
+              type="number"
+              name="age"
+              value={this.state.age}
+              onChange={(event) => this.getdata(event)}
+              required
+              errorMessage="cannot be empty"
+            />
+            <br />
+            <TextField
+              placeholder="enter your state..."
+              label="EmpState"
+              type="text"
+              name="empState"
+              value={this.state.empState}
+              onChange={(event) => this.getdata(event)}
+              required
+              errorMessage="cannot be empty"
+            />
+            <br />
+
+            <TextField
+              placeholder="select a date..."
+              label="DOJ"
+              type="date"
+              name="doj"
+              value={this.state.doj}
+              onChange={(event) => this.getdata(event)}
+              required
+              errorMessage="cannot be empty"
+            />
+            <br />
+            <PrimaryButton onClick={()=>this.SaveData(event)}>SAVE</PrimaryButton>
+            <PrimaryButton
+              onClick={() => this.UpdateData(this.state.item)}
+              disabled={this.state.disabled}
+            >
+              EDIT
+            </PrimaryButton>
+            <DefaultButton
+              onClick={() => this.DeleteData(this.state.item)}
+              disabled={this.state.disabled}
+            >
+              DELETE
+            </DefaultButton>
+            <PrimaryButton onClick={()=>this.closePanel()}>Close</PrimaryButton>
+            </Panel>
           </div>
         </div>
       </div>
