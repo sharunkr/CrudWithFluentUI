@@ -28,6 +28,7 @@ export interface IDetailsListBasicExampleItem {
   age: number;
   empState: string;
   doj: number;
+  Doj:number;
 }
 
 export interface IDetailsListBasicExampleState {
@@ -58,12 +59,13 @@ export default class Reactdemo extends React.Component<any, any> {
       age: null,
       empState: "",
       doj: null,
+      Doj: null,
       items: [],
       selectionDetails: "",
       item: 0,
       disabled: true,
       openPanel: false,
-      dismissPanel:true,
+      dismissPanel: true,
     };
     this.SaveData = this.SaveData.bind(this);
     this.UpdateData = this.UpdateData.bind(this);
@@ -74,14 +76,6 @@ export default class Reactdemo extends React.Component<any, any> {
         this.setState({ selectionDetails: this._getSelectionDetails() }),
     });
     this._columns = [
-      {
-        key: "column1",
-        name: "ID",
-        fieldName: "eid",
-        minWidth: 100,
-        maxWidth: 200,
-        isResizable: true,
-      },
       {
         key: "column2",
         name: "NAME",
@@ -182,6 +176,7 @@ export default class Reactdemo extends React.Component<any, any> {
               (new Date(items[i].doj).getMonth() + 1) +
               "-" +
               new Date(items[i].doj).getFullYear(),
+            Doj: items[i].doj,
           });
         }
 
@@ -207,16 +202,21 @@ export default class Reactdemo extends React.Component<any, any> {
         item: getitem.eid,
         disabled: false,
         openPanel: true,
+        Eid: getitem.eid,
+        name: getitem.name,
+        age: getitem.age,
+        empState: getitem.empState,
+        doj: getitem.Doj,
       });
+      console.log(getitem.Doj);
     }
-    
   }
-  closePanel=()=>{
+  closePanel = () => {
     this.setState({
       openPanel: false,
-      dismissPanel:true,
-    })
-  }
+      dismissPanel: true,
+    });
+  };
 
   public render() {
     return (
@@ -224,16 +224,6 @@ export default class Reactdemo extends React.Component<any, any> {
         <div>
           <h1>CRUD OPERATION</h1>
           <form onSubmit={(event) => this.SaveData(event)}>
-            <TextField
-              placeholder="enter a number..."
-              label="Eid"
-              type="number"
-              name="Eid"
-              value={this.state.Eid}
-              onChange={(event) => this.getdata(event)}
-              required
-              errorMessage="cannot be empty"
-            />
             <br />
             <TextField
               placeholder="enter a name..."
@@ -243,7 +233,7 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.name}
               onChange={(event) => this.getdata(event)}
               required
-              errorMessage="cannot be empty"
+              
             />
             <br />
 
@@ -255,7 +245,7 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.age}
               onChange={(event) => this.getdata(event)}
               required
-              errorMessage="cannot be empty"
+              
             />
             <br />
             <TextField
@@ -266,7 +256,7 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.empState}
               onChange={(event) => this.getdata(event)}
               required
-              errorMessage="cannot be empty"
+              
             />
             <br />
 
@@ -278,22 +268,10 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.doj}
               onChange={(event) => this.getdata(event)}
               required
-              errorMessage="cannot be empty"
+              
             />
             <br />
             <PrimaryButton type="submit">SAVE</PrimaryButton>
-            <PrimaryButton
-              onClick={() => this.UpdateData(this.state.item)}
-              disabled={this.state.disabled}
-            >
-              EDIT
-            </PrimaryButton>
-            <DefaultButton
-              onClick={() => this.DeleteData(this.state.item)}
-              disabled={this.state.disabled}
-            >
-              DELETE
-            </DefaultButton>
           </form>
           <div>
             <Fabric>
@@ -320,78 +298,74 @@ export default class Reactdemo extends React.Component<any, any> {
               closeButtonAriaLabel="Close"
               isFooterAtBottom={true}
             >
-              <p>Panel CRUD</p>
+              <p>
+                {" "}
+                <DefaultButton
+                  onClick={() => this.DeleteData(this.state.item)}
+                  disabled={this.state.disabled}
+                >
+                  DELETE
+                </DefaultButton>
+              </p>
+
+              <br />
               <TextField
-              placeholder="enter a number..."
-              label="Eid"
-              type="number"
-              name="Eid"
-              value={this.state.Eid}
-              onChange={(event) => this.getdata(event)}
-              required
-              errorMessage="cannot be empty"
-            />
-            <br />
-            <TextField
-              placeholder="enter a name..."
-              label="Name"
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={(event) => this.getdata(event)}
-              required
-              errorMessage="cannot be empty"
-            />
-            <br />
+                placeholder="enter a name..."
+                label="Name"
+                type="text"
+                name="name"
+                value={this.state.name}
+                onChange={(event) => this.getdata(event)}
+                required
+               
+              />
+              <br />
 
-            <TextField
-              placeholder="enter your age..."
-              label="Age"
-              type="number"
-              name="age"
-              value={this.state.age}
-              onChange={(event) => this.getdata(event)}
-              required
-              errorMessage="cannot be empty"
-            />
-            <br />
-            <TextField
-              placeholder="enter your state..."
-              label="EmpState"
-              type="text"
-              name="empState"
-              value={this.state.empState}
-              onChange={(event) => this.getdata(event)}
-              required
-              errorMessage="cannot be empty"
-            />
-            <br />
+              <TextField
+                placeholder="enter your age..."
+                label="Age"
+                type="number"
+                name="age"
+                value={this.state.age}
+                onChange={(event) => this.getdata(event)}
+                required
+                
+              />
+              <br />
+              <TextField
+                placeholder="enter your state..."
+                label="EmpState"
+                type="text"
+                name="empState"
+                value={this.state.empState}
+                onChange={(event) => this.getdata(event)}
+                required
+               
+              />
+              <br />
 
-            <TextField
-              placeholder="select a date..."
-              label="DOJ"
-              type="date"
-              name="doj"
-              value={this.state.doj}
-              onChange={(event) => this.getdata(event)}
-              required
-              errorMessage="cannot be empty"
-            />
-            <br />
-            <PrimaryButton onClick={()=>this.SaveData(event)}>SAVE</PrimaryButton>
-            <PrimaryButton
-              onClick={() => this.UpdateData(this.state.item)}
-              disabled={this.state.disabled}
-            >
-              EDIT
-            </PrimaryButton>
-            <DefaultButton
-              onClick={() => this.DeleteData(this.state.item)}
-              disabled={this.state.disabled}
-            >
-              DELETE
-            </DefaultButton>
-            <PrimaryButton onClick={()=>this.closePanel()}>Close</PrimaryButton>
+              <TextField
+                placeholder="select a date..."
+                label="DOJ"
+                type="date"
+                name="doj"
+                value={this.state.doj}
+                onChange={(event) => this.getdata(event)}
+                required
+                
+              />
+              <br />
+
+              <PrimaryButton
+                onClick={() => this.UpdateData(this.state.item)}
+                disabled={this.state.disabled}
+              >
+                EDIT
+              </PrimaryButton>
+
+              <PrimaryButton onClick={() => this.closePanel()}>
+                Close
+              </PrimaryButton>
             </Panel>
           </div>
         </div>
