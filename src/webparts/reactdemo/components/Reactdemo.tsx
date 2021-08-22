@@ -28,7 +28,7 @@ export interface IDetailsListBasicExampleItem {
   age: number;
   empState: string;
   doj: number;
-  Doj:number;
+  Doj: number;
 }
 
 export interface IDetailsListBasicExampleState {
@@ -66,6 +66,7 @@ export default class Reactdemo extends React.Component<any, any> {
       disabled: true,
       openPanel: false,
       dismissPanel: true,
+      openaddPanel: false,
     };
     this.SaveData = this.SaveData.bind(this);
     this.UpdateData = this.UpdateData.bind(this);
@@ -206,7 +207,7 @@ export default class Reactdemo extends React.Component<any, any> {
         name: getitem.name,
         age: getitem.age,
         empState: getitem.empState,
-        doj: getitem.Doj,
+        doj: getitem.Doj.toLocaleString,
       });
       console.log(getitem.Doj);
     }
@@ -215,6 +216,14 @@ export default class Reactdemo extends React.Component<any, any> {
     this.setState({
       openPanel: false,
       dismissPanel: true,
+      openaddPanel: false,
+      dismissaddPanel: true,
+    });
+  };
+
+  addData = () => {
+    this.setState({
+      openaddPanel: true,
     });
   };
 
@@ -223,8 +232,16 @@ export default class Reactdemo extends React.Component<any, any> {
       <div>
         <div>
           <h1>CRUD OPERATION</h1>
-          <form onSubmit={(event) => this.SaveData(event)}>
-            <br />
+
+          <br />
+          <PrimaryButton onClick={() => this.addData()}>ADD DATA</PrimaryButton>
+          <Panel
+            isOpen={this.state.openaddPanel}
+            onDismiss={this.state.dismissaddPanel}
+            headerText="CRUD APPLICATION"
+            closeButtonAriaLabel="Close"
+            isFooterAtBottom={true}
+          >
             <TextField
               placeholder="enter a name..."
               label="Name"
@@ -233,7 +250,6 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.name}
               onChange={(event) => this.getdata(event)}
               required
-              
             />
             <br />
 
@@ -245,7 +261,6 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.age}
               onChange={(event) => this.getdata(event)}
               required
-              
             />
             <br />
             <TextField
@@ -256,7 +271,6 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.empState}
               onChange={(event) => this.getdata(event)}
               required
-              
             />
             <br />
 
@@ -268,11 +282,16 @@ export default class Reactdemo extends React.Component<any, any> {
               value={this.state.doj}
               onChange={(event) => this.getdata(event)}
               required
-              
             />
             <br />
-            <PrimaryButton type="submit">SAVE</PrimaryButton>
-          </form>
+            <PrimaryButton onClick={(event) => this.SaveData(event)}>
+              SAVE
+            </PrimaryButton>
+            <PrimaryButton onClick={() => this.closePanel()}>
+              Close
+            </PrimaryButton>
+          </Panel>
+
           <div>
             <Fabric>
               <DetailsList
@@ -317,7 +336,6 @@ export default class Reactdemo extends React.Component<any, any> {
                 value={this.state.name}
                 onChange={(event) => this.getdata(event)}
                 required
-               
               />
               <br />
 
@@ -329,7 +347,6 @@ export default class Reactdemo extends React.Component<any, any> {
                 value={this.state.age}
                 onChange={(event) => this.getdata(event)}
                 required
-                
               />
               <br />
               <TextField
@@ -340,7 +357,6 @@ export default class Reactdemo extends React.Component<any, any> {
                 value={this.state.empState}
                 onChange={(event) => this.getdata(event)}
                 required
-               
               />
               <br />
 
@@ -352,7 +368,6 @@ export default class Reactdemo extends React.Component<any, any> {
                 value={this.state.doj}
                 onChange={(event) => this.getdata(event)}
                 required
-                
               />
               <br />
 
