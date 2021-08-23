@@ -27,8 +27,8 @@ export interface IDetailsListBasicExampleItem {
   name: string;
   age: number;
   empState: string;
-  doj: number;
-  Doj: number;
+  doj: any;
+  Doj: any;
 }
 
 export interface IDetailsListBasicExampleState {
@@ -207,9 +207,10 @@ export default class Reactdemo extends React.Component<any, any> {
         name: getitem.name,
         age: getitem.age,
         empState: getitem.empState,
-        doj: getitem.Doj.toLocaleString,
+        Doj: new Date(getitem.Doj).toLocaleDateString("en-GB"),
       });
-      console.log(getitem.Doj);
+      console.log(new Date(getitem.Doj).toLocaleDateString("en-GB"));
+      console.log(getitem.doj);
     }
   }
   closePanel = () => {
@@ -237,7 +238,7 @@ export default class Reactdemo extends React.Component<any, any> {
           <PrimaryButton onClick={() => this.addData()}>ADD DATA</PrimaryButton>
           <Panel
             isOpen={this.state.openaddPanel}
-            onDismiss={this.state.dismissaddPanel}
+            onDismiss={()=>this.closePanel()}
             headerText="CRUD APPLICATION"
             closeButtonAriaLabel="Close"
             isFooterAtBottom={true}
@@ -312,7 +313,7 @@ export default class Reactdemo extends React.Component<any, any> {
           <div>
             <Panel
               isOpen={this.state.openPanel}
-              onDismiss={this.state.dismissPanel}
+              onDismiss={()=>this.closePanel()}
               headerText="CRUD APPLICATION"
               closeButtonAriaLabel="Close"
               isFooterAtBottom={true}
@@ -359,6 +360,14 @@ export default class Reactdemo extends React.Component<any, any> {
                 required
               />
               <br />
+              <TextField
+                placeholder="select a date..."
+                label="DOJ"
+                type="text"
+                name="Doj"
+                value={this.state.Doj}
+              />
+              <br />
 
               <TextField
                 placeholder="select a date..."
@@ -370,7 +379,7 @@ export default class Reactdemo extends React.Component<any, any> {
                 required
               />
               <br />
-
+          
               <PrimaryButton
                 onClick={() => this.UpdateData(this.state.item)}
                 disabled={this.state.disabled}
