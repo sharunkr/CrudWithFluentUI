@@ -207,7 +207,8 @@ export default class Reactdemo extends React.Component<any, any> {
         name: getitem.name,
         age: getitem.age,
         empState: getitem.empState,
-        Doj: new Date(getitem.Doj).toLocaleDateString("en-GB"),
+        Doj: new Date(getitem.Doj).toLocaleDateString("en-IN"),
+        doj: new Date(getitem.Doj).toLocaleDateString("en-GB"),
       });
       console.log(new Date(getitem.Doj).toLocaleDateString("en-GB"));
       console.log(getitem.doj);
