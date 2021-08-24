@@ -21,7 +21,7 @@ export default class ReactdemoWebPart extends BaseClientSideWebPart<IReactdemoWe
     const element: React.ReactElement<IReactdemoProps> = React.createElement(
       Reactdemo,
       {
-        description: this.properties.description,
+        description: "this is webpart demo",
         webURL:this.context.pageContext.web.absoluteUrl,
         context:this.context
       }
