@@ -133,6 +133,7 @@ export default class Reactdemo extends React.Component<any, any> {
         doj: this.state.doj,
       });
     this.getData();
+    this.closePanel();
   };
 
   UpdateData = async (items) => {
@@ -147,6 +148,7 @@ export default class Reactdemo extends React.Component<any, any> {
     });
     this.getData();
     this._selection.setAllSelected(false);
+    this.closePanel();
   };
 
   DeleteData = async (items) => {
@@ -154,6 +156,7 @@ export default class Reactdemo extends React.Component<any, any> {
     await list.items.getById(items).delete();
     this.getData();
     this._selection.setAllSelected(false);
+    this.closePanel();
   };
   private getData = async () => {
     await sp.web.lists
@@ -243,7 +246,7 @@ export default class Reactdemo extends React.Component<any, any> {
             headerText="CRUD APPLICATION"
             closeButtonAriaLabel="Close"
             isFooterAtBottom={true}
-          >
+          ><form>
             <TextField
               placeholder="enter a name..."
               label="Name"
@@ -286,12 +289,13 @@ export default class Reactdemo extends React.Component<any, any> {
               required
             />
             <br />
-            <PrimaryButton onClick={(event) => this.SaveData(event)}>
+            <PrimaryButton type="submit" onClick={(event) => this.SaveData(event)}>
               SAVE
             </PrimaryButton>
             <PrimaryButton onClick={() => this.closePanel()}>
               Close
             </PrimaryButton>
+            </form>
           </Panel>
 
           <div>
