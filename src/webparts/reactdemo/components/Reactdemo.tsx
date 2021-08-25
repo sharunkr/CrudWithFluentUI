@@ -7,11 +7,11 @@ import { sp } from "@pnp/sp";
 import "@pnp/sp/webs";
 import "@pnp/sp/lists";
 import "@pnp/sp/items";
-import { IItemAddResult } from "@pnp/sp/items";
+import { IItemAddResult, Item } from "@pnp/sp/items";
 import { DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
 import { TextField } from "@fluentui/react/lib/TextField";
 import { Fabric } from "office-ui-fabric-react/lib/Fabric";
-import { Calendar, defaultCalendarStrings } from "@fluentui/react";
+import { Calendar, DatePicker, defaultCalendarStrings } from "@fluentui/react";
 import {
   DetailsList,
   DetailsListLayoutMode,
@@ -134,11 +134,9 @@ export default class Reactdemo extends React.Component<any, any> {
       });
     this.getData();
     this.closePanel();
-   
   };
 
   UpdateData = async (items) => {
-    
     let list = sp.web.lists.getByTitle("PnpCrud");
 
     const i = await list.items.getById(items).update({
@@ -151,11 +149,11 @@ export default class Reactdemo extends React.Component<any, any> {
     this.getData();
     this._selection.setAllSelected(false);
     this.setState({
-      name:"",
-      age:"",
-      empState:"",
-      doj:"",
-    })
+      name: "",
+      age: "",
+      empState: "",
+      doj: "",
+    });
     this.closePanel();
   };
 
@@ -218,8 +216,8 @@ export default class Reactdemo extends React.Component<any, any> {
         name: getitem.name,
         age: getitem.age,
         empState: getitem.empState,
-        Doj: new Date(getitem.Doj).toLocaleDateString("en-IN"),
-        doj: new Date(getitem.Doj).toLocaleDateString("en-GB"),
+        // Doj: new Date(getitem.Doj).toLocaleDateString("en-IN"),
+        doj: new Date(getitem.Doj)
       });
       console.log(new Date(getitem.Doj).toLocaleDateString("en-GB"));
       console.log(getitem.doj);
@@ -237,12 +235,11 @@ export default class Reactdemo extends React.Component<any, any> {
   addData = () => {
     this.setState({
       openaddPanel: true,
-      
-        name:"",
-        age:"",
-        empState:"",
-        doj:"",
-      
+
+      name: "",
+      age: "",
+      empState: "",
+      doj: "",
     });
   };
 
@@ -256,59 +253,60 @@ export default class Reactdemo extends React.Component<any, any> {
           <PrimaryButton onClick={() => this.addData()}>ADD DATA</PrimaryButton>
           <Panel
             isOpen={this.state.openaddPanel}
-            onDismiss={()=>this.closePanel()}
+            onDismiss={() => this.closePanel()}
             headerText="CRUD APPLICATION"
             closeButtonAriaLabel="Close"
             isFooterAtBottom={true}
-          ><form>
-            <TextField
-              placeholder="enter a name..."
-              label="Name"
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={(event) => this.getdata(event)}
-              required
-            />
-            <br />
+          >
+            <form>
+              <TextField
+                placeholder="enter a name..."
+                label="Name"
+                type="text"
+                name="name"
+                value={this.state.name}
+                onChange={(event) => this.getdata(event)}
+                required
+              />
+              <br />
 
-            <TextField
-              placeholder="enter your age..."
-              label="Age"
-              type="number"
-              name="age"
-              value={this.state.age}
-              onChange={(event) => this.getdata(event)}
-              required
-            />
-            <br />
-            <TextField
-              placeholder="enter your state..."
-              label="EmpState"
-              type="text"
-              name="empState"
-              value={this.state.empState}
-              onChange={(event) => this.getdata(event)}
-              required
-            />
-            <br />
+              <TextField
+                placeholder="enter your age..."
+                label="Age"
+                type="number"
+                name="age"
+                value={this.state.age}
+                onChange={(event) => this.getdata(event)}
+                required
+              />
+              <br />
+              <TextField
+                placeholder="enter your state..."
+                label="EmpState"
+                type="text"
+                name="empState"
+                value={this.state.empState}
+                onChange={(event) => this.getdata(event)}
+                required
+              />
+              <br />
 
-            <TextField
-              placeholder="select a date..."
-              label="DOJ"
-              type="date"
-              name="doj"
-              value={this.state.doj}
-              onChange={(event) => this.getdata(event)}
-              required
-            />
-            <br />
-            <PrimaryButton type="submit" onClick={(event) => this.SaveData(event)}>
-              SAVE
-            </PrimaryButton>
-            <PrimaryButton onClick={() => this.closePanel()}>
-              Close
-            </PrimaryButton>
+              <DatePicker
+                placeholder="select a date..."
+                label="DOJ"
+                value={this.state.doj}
+                onSelectDate={(item) => this.setState({ doj: item })}
+              />
+              <br />
+              <PrimaryButton
+                type="submit"
+                onClick={(event) => this.SaveData(event)}
+              >
+                SAVE
+              </PrimaryButton>
+              <PrimaryButton onClick={() => this.closePanel()}>
+                Close
+              </PrimaryButton>
             </form>
           </Panel>
 
@@ -332,7 +330,7 @@ export default class Reactdemo extends React.Component<any, any> {
           <div>
             <Panel
               isOpen={this.state.openPanel}
-              onDismiss={()=>this.closePanel()}
+              onDismiss={() => this.closePanel()}
               headerText="CRUD APPLICATION"
               closeButtonAriaLabel="Close"
               isFooterAtBottom={true}
@@ -379,26 +377,23 @@ export default class Reactdemo extends React.Component<any, any> {
                 required
               />
               <br />
-              <TextField
+              {/* <TextField
                 placeholder="select a date..."
                 label="DOJ"
                 type="text"
                 name="Doj"
                 value={this.state.Doj}
               />
-              <br />
+              <br /> */}
 
-              <TextField
+              <DatePicker
                 placeholder="select a date..."
                 label="DOJ"
-                type="date"
-                name="doj"
                 value={this.state.doj}
-                onChange={(event) => this.getdata(event)}
-                required
+                onSelectDate={(item) => this.setState({ doj: item })}
               />
               <br />
-          
+
               <PrimaryButton
                 onClick={(e) => this.UpdateData(this.state.item)}
                 disabled={this.state.disabled}
