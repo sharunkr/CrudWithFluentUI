@@ -134,9 +134,11 @@ export default class Reactdemo extends React.Component<any, any> {
       });
     this.getData();
     this.closePanel();
+   
   };
 
   UpdateData = async (items) => {
+    
     let list = sp.web.lists.getByTitle("PnpCrud");
 
     const i = await list.items.getById(items).update({
@@ -148,6 +150,12 @@ export default class Reactdemo extends React.Component<any, any> {
     });
     this.getData();
     this._selection.setAllSelected(false);
+    this.setState({
+      name:"",
+      age:"",
+      empState:"",
+      doj:"",
+    })
     this.closePanel();
   };
 
@@ -229,6 +237,12 @@ export default class Reactdemo extends React.Component<any, any> {
   addData = () => {
     this.setState({
       openaddPanel: true,
+      
+        name:"",
+        age:"",
+        empState:"",
+        doj:"",
+      
     });
   };
 
@@ -386,7 +400,7 @@ export default class Reactdemo extends React.Component<any, any> {
               <br />
           
               <PrimaryButton
-                onClick={() => this.UpdateData(this.state.item)}
+                onClick={(e) => this.UpdateData(this.state.item)}
                 disabled={this.state.disabled}
               >
                 EDIT
